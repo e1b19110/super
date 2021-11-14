@@ -28,7 +28,6 @@ INSERT INTO items (item_name,price) VALUES ('牛肉300グラム',1300);
 
 
 
-
 INSERT INTO stock (shop_id,item_id,number) VALUES (1,1,10);
 INSERT INTO stock (shop_id,item_id,number) VALUES (1,2,20);
 INSERT INTO stock (shop_id,item_id,number) VALUES (1,3,40);
