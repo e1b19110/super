@@ -22,8 +22,8 @@ public interface StockMapper {
   void insertItem(Stock stock);
 
   @Update("update stock set number=#{number} where stock_id = #{stock_id}")
-  void updateById(Stock stock);
+  void updateById(int stock_id);
 
   @Delete("delete from stock where stock_id = #{stock_id}")
-  boolean deleteById(Stock stock);
+  boolean deleteById(int stock_id);
 }
