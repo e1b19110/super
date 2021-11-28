@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.springframework.org/schema/security">
+
+<head>
+  <meta charset="utf-8">
+  <title>Super</title>
+</head>
+
+<body bgcolor="#e0e0ee">
+  <h1>ようこそ <span sec:authentication="name"></span>さん</h1>
+
+  <div><a href="/logout">
+      <h3>ログアウト</h3>
+    </a></div>
+
+  <div><a href="/zaiko">
+      <h3>在庫確認</h3>
+    </a></div>
+
+  <div><a href="/nyuka">
+      <h3>入荷</h3>
+    </a></div>
+
+</body>
+
+</html>
