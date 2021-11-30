@@ -39,6 +39,8 @@ public class Cont {
 
   @GetMapping("zaiko")
   public String zaiko(ModelMap model) {
+    ArrayList<Shop> shoplist = shmapper.selectAllShop();
+    model.addAttribute("shoplist", shoplist);
     //ArrayList<Zaiko> zaiko1 = zmapper.selectById();
 
     return "zaiko.html";
