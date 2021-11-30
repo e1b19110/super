@@ -1,1 +1,42 @@
-zaiko
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.springframework.org/schema/security">
+
+<head>
+  <meta charset="utf-8">
+  <title>zaiko</title>
+</head>
+
+<body>
+  <h1>在庫</h1>
+
+  <div th:if="${shoplist}">
+    <div th:each="shop,stat:${shoplist}">
+      <tr>
+        <td>店舗ID:<a th:href="@{/himiko/zaiko/tempo(shop_id=${shop.shop_id})}">[[${shop.shop_id}]]</a></td>
+        <td>店舗名:[[${shop.shop_name}]]</td>
+      </tr>
+    </div>
+    <p>
+      <a href="/himiko/login">もどる</a>
+    </p>
+  </div>
+
+  <div th:if="${zaiko}">
+    <h2>[[${shop_name}]]</h2>
+    <div th:each="zaiko,stat:${zaiko}">
+      <tr>
+        <td>商品ID:[[${zaiko.item_id}]]</td>
+        <td>商品名:[[${zaiko.item_name}]]</td>
+        <td>在庫数:[[${zaiko.number}]]</td>
+        <td>単価  :[[${zaiko.price}]]</td>
+      </tr>
+    </div>
+    <p>
+      <a href="/himiko/zaiko">もどる</a>
+    </p>
+  </div>
+
+  
+</body>
+
+</html>
