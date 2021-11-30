@@ -12,15 +12,31 @@
   <div th:if="${shoplist}">
     <div th:each="shop,stat:${shoplist}">
       <tr>
-        <td>店舗ID:<a th:href="@{/himiko/zaiko(id=${shop.shop_id})}">[[${shop.shop_id}]]</a></td>
+        <td>店舗ID:<a th:href="@{/himiko/zaiko/tempo(shop_id=${shop.shop_id})}">[[${shop.shop_id}]]</a></td>
         <td>店舗名:[[${shop.shop_name}]]</td>
       </tr>
     </div>
+    <p>
+      <a href="/himiko/login">もどる</a>
+    </p>
   </div>
 
-  <p>
-    <a href="/himiko/login">もどる</a>
-  </p>
+  <div th:if="${zaiko}">
+    <h2>[[${shop_name}]]</h2>
+    <div th:each="zaiko,stat:${zaiko}">
+      <tr>
+        <td>商品ID:[[${zaiko.item_id}]]</td>
+        <td>商品名:[[${zaiko.item_name}]]</td>
+        <td>在庫数:[[${zaiko.number}]]</td>
+        <td>単価  :[[${zaiko.price}]]</td>
+      </tr>
+    </div>
+    <p>
+      <a href="/himiko/zaiko">もどる</a>
+    </p>
+  </div>
+
+  
 </body>
 
 </html>

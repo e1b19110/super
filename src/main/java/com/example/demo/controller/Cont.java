@@ -41,7 +41,15 @@ public class Cont {
   public String zaiko(ModelMap model) {
     ArrayList<Shop> shoplist = shmapper.selectAllShop();
     model.addAttribute("shoplist", shoplist);
-    //ArrayList<Zaiko> zaiko1 = zmapper.selectById();
+
+    return "zaiko.html";
+  }
+
+  @GetMapping("zaiko/tempo")
+  public String tempo(ModelMap model, @RequestParam int shop_id){
+    ArrayList<Zaiko> zaiko1 = zmapper.selectById(shop_id);
+    model.addAttribute("zaiko", zaiko1);
+    model.addAttribute("shop_name", zaiko1.get(0).getShop_name());
 
     return "zaiko.html";
   }
