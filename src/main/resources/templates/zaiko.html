@@ -1,1 +1,31 @@
-zaiko
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.springframework.org/schema/security">
+
+<head>
+  <meta charset="utf-8">
+  <title>zaiko</title>
+</head>
+
+<body>
+  <h1>在庫</h1>
+
+  <p th:if="${un1}">
+  <div th:if="${login_user}">
+    <h2>[[${un1.name}]] VS [[${login_user}]]</h2>
+  </div>
+  </p>
+
+
+
+  <div th:if="${result}">
+    <a>あなたの手 [[${te}]]</a><br>
+    <a>相手の手 [[${cpu}]]</a><br>
+    <a>結果 [[${result}]]</a><br>
+  </div>
+
+  <p>
+    <a href="/lec02/step3">もどる</a>
+  </p>
+</body>
+
+</html>

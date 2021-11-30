@@ -17,6 +17,8 @@ import com.example.demo.model.Shop;
 import com.example.demo.model.ShopMapper;
 import com.example.demo.model.Stock;
 import com.example.demo.model.StockMapper;
+import com.example.demo.model.Zaiko;
+import com.example.demo.model.ZaikoMapper;
 
 @RequestMapping("/himiko")
 @Controller
@@ -27,6 +29,8 @@ public class Cont {
   ShopMapper shmapper;
   @Autowired
   StockMapper stmapper;
+  @Autowired
+  ZaikoMapper zmapper;
 
   @GetMapping("login")
   public String login() {
@@ -34,7 +38,9 @@ public class Cont {
   }
 
   @GetMapping("zaiko")
-  public String zaiko() {
+  public String zaiko(ModelMap model) {
+    //ArrayList<Zaiko> zaiko1 = zmapper.selectById();
+
     return "zaiko.html";
   }
 
