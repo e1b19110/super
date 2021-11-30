@@ -16,10 +16,12 @@ public class Sample3AuthConfiguration extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
-    // 平文のパスワードをエンコーダにかけてハッシュ化し，"user1"と関連付けている．ロール名は"USER"
-    // プログラム中に素のパスワードが含まれることになるので望ましくない
-    auth.inMemoryAuthentication().withUser("user1").password(passwordEncoder().encode("p@ss")).roles("USER");
-    auth.inMemoryAuthentication().withUser("user2").password(passwordEncoder().encode("p@ss")).roles("USER");
+    // sshrun htpasswd -nbBC 10 user1 p@ss
+    // sshrun htpasswd -nbBC 10 user2 pass
+    auth.inMemoryAuthentication().withUser("user1")
+        .password("$2y$10$vz5WWjPAEOULDnM8Av/gvO25SEXEzbjddm1AZYTl/abJ8GKSdjQOC").roles("USER");
+    auth.inMemoryAuthentication().withUser("user2")
+        .password("$2y$10$tLcTuZmacIAMyxbE4yXqEO/tkgABsYJsiax/UUgIWB0IG0ALikIi6").roles("USER");
 
     // $ sshrun htpasswd -nbBC 10 admin adm1n
     auth.inMemoryAuthentication().withUser("admin")
@@ -35,7 +37,7 @@ public class Sample3AuthConfiguration extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     http.formLogin();
-    http.authorizeRequests().antMatchers("/").authenticated();
+    http.authorizeRequests().antMatchers("/himiko/**").authenticated();
     http.logout().logoutSuccessUrl("/");
 
     http.csrf().disable();
