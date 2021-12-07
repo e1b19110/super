@@ -64,13 +64,29 @@ public class Cont {
     return "nyuka1.html";
   }
 
-  @GetMapping("nyuka2")
+  @PostMapping("nyuka2")
   public String nyuka2(@RequestParam Integer item_id, @RequestParam Integer shop_id, @RequestParam Integer number) {
+    int flag = 0;
     Stock stock = new Stock();
-    stock.setItem_id(item_id);
-    stock.setShop_id(shop_id);
-    stock.setNumber(number);
-    stmapper.insertItem(stock);
+    ArrayList<Stock> stocklist = stmapper.selectAllStock();
+    for (int i = 0; i < stocklist.size(); i++) {
+      if (stocklist.get(i).getItem_id() == item_id && stocklist.get(i).getShop_id() == shop_id) {
+        flag = 1;
+        break;
+      }
+    }
+    if (flag == 0) {
+      stock.setItem_id(item_id);
+      stock.setShop_id(shop_id);
+      stock.setNumber(number);
+      stmapper.insertItem(stock);
+    } else if (flag == 1) {
+      stock = stmapper.selectById(item_id, shop_id);
+      int newnumber = stock.getNumber() + number;
+      stock.setNumber(newnumber);
+      stmapper.updateById(stock);
+    }
+
     return "nyuka1.html";
   }
 
