@@ -46,7 +46,7 @@ public class Cont {
   }
 
   @GetMapping("zaiko/tempo")
-  public String tempo(ModelMap model, @RequestParam int shop_id){
+  public String tempo(ModelMap model, @RequestParam int shop_id) {
     ArrayList<Zaiko> zaiko1 = zmapper.selectById(shop_id);
     model.addAttribute("zaiko", zaiko1);
     model.addAttribute("shop_name", zaiko1.get(0).getShop_name());
@@ -58,4 +58,20 @@ public class Cont {
   public String nyuka() {
     return "nyuka.html";
   }
+
+  @GetMapping("nyuka1")
+  public String nyuka1() {
+    return "nyuka1.html";
+  }
+
+  @GetMapping("nyuka2")
+  public String nyuka2(@RequestParam Integer item_id, @RequestParam Integer shop_id, @RequestParam Integer number) {
+    Stock stock = new Stock();
+    stock.setItem_id(item_id);
+    stock.setShop_id(shop_id);
+    stock.setNumber(number);
+    stmapper.insertItem(stock);
+    return "nyuka1.html";
+  }
+
 }
