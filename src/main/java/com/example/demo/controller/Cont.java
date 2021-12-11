@@ -19,6 +19,7 @@ import com.example.demo.model.Stock;
 import com.example.demo.model.StockMapper;
 import com.example.demo.model.Zaiko;
 import com.example.demo.model.ZaikoMapper;
+import com.example.demo.model.nSchedule;
 
 @RequestMapping("/himiko")
 @Controller
@@ -31,6 +32,8 @@ public class Cont {
   StockMapper stmapper;
   @Autowired
   ZaikoMapper zmapper;
+  @Autowired
+  private nSchedule nSchedule;
 
   @GetMapping("login")
   public String login() {
@@ -65,28 +68,49 @@ public class Cont {
   }
 
   @PostMapping("nyuka2")
-  public String nyuka2(@RequestParam Integer item_id, @RequestParam Integer shop_id, @RequestParam Integer number) {
+  public String nyuka2(ModelMap model, @RequestParam Integer item_id, @RequestParam Integer shop_id,
+      @RequestParam Integer number) {
+    Stock item = new Stock();
+    item.setItem_id(item_id);
+    item.setShop_id(shop_id);
+    item.setNumber(number);
+
+    nSchedule.addItems(item);
+    model.addAttribute("itemlist", nSchedule);
+
+    return "nyuka1.html";
+  }
+
+  @GetMapping("nyuka3")
+  public String nyuka3() {
+    nSchedule.resetItems();
+    return "nyuka1.html";
+  }
+
+  @GetMapping("nyuka4")
+  public String nyuka4() {
     int flag = 0;
     Stock stock = new Stock();
     ArrayList<Stock> stocklist = stmapper.selectAllStock();
-    for (int i = 0; i < stocklist.size(); i++) {
-      if (stocklist.get(i).getItem_id() == item_id && stocklist.get(i).getShop_id() == shop_id) {
-        flag = 1;
-        break;
+    ArrayList<Stock> nSchedulelist = nSchedule.getItems();
+    for (Stock sche : nSchedulelist) {
+      for (int i = 0; i < stocklist.size(); i++) {
+        if (stocklist.get(i).getItem_id() == sche.getItem_id() && stocklist.get(i).getShop_id() == sche.getShop_id()) {
+          flag = 1;
+          break;
+        }
+      }
+      if (flag == 0) {
+        stmapper.insertItem(sche);
+      } else if (flag == 1) {
+        stock = stmapper.selectById(sche.getItem_id(), sche.getShop_id());
+        int newnumber = stock.getNumber() + sche.getNumber();
+        stock.setNumber(newnumber);
+        stmapper.updateById(stock);
+        flag = 0;
       }
     }
-    if (flag == 0) {
-      stock.setItem_id(item_id);
-      stock.setShop_id(shop_id);
-      stock.setNumber(number);
-      stmapper.insertItem(stock);
-    } else if (flag == 1) {
-      stock = stmapper.selectById(item_id, shop_id);
-      int newnumber = stock.getNumber() + number;
-      stock.setNumber(newnumber);
-      stmapper.updateById(stock);
-    }
-
+    nSchedule.resetItems();
     return "nyuka1.html";
   }
 
