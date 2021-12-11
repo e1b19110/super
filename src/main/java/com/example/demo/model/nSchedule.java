@@ -23,5 +23,6 @@ public class nSchedule {
   public void setItems(ArrayList<Stock> items) {
     this.items = items;
   }
+
   
 }
