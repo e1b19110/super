@@ -1,25 +1,42 @@
 <head>
   <meta charset="utf-8">
   <title>Super</title>
-<style> 
-label{
-  display: inline-block;
-  text-align: left;
-  width: 150px;
-}
-</style>
+  <style>
+    label {
+      display: inline-block;
+      text-align: left;
+      width: 150px;
+    }
+  </style>
 </head>
 
 <body bgcolor="#e0e0ee">
   <h1>入荷処理</h1>
   <p>
-    <form action="/himiko/nyuka2" method="post">
-      <p><label for="item">アイテムID</label><input type="number" name="item_id" /></p><br>
-      <p><label for="tenpo">店舗ID</label><input type="number" name="shop_id" /></p><br>
-      <p><label for="kosuu">個数</label><input type="number" name="number" /></p><br>
-      <input type="submit" value="入荷"><input type="reset" value="リセット">
-    </form>
+  <form action="/himiko/nyuka2" method="post">
+    <p><label for="item">アイテムID</label><input type="number" name="item_id" /></p><br>
+    <p><label for="tenpo">店舗ID</label><input type="number" name="shop_id" /></p><br>
+    <p><label for="kosuu">個数</label><input type="number" name="number" /></p><br>
+    <input type="submit" value="入荷"><input type="reset" value="リセット">
+  </form>
   </p>
+
+  <div th:if="${itemlist}">
+    <h2>入荷予定リスト</h2>
+    <div th:each="items,stat:${itemlist.items}">
+      <tr>
+        <td>店舗ID:[[${items.shop_id}]] </td>
+        <td>アイテムID:[[${items.item_id}]] </td>
+        <td>個数:[[${items.number}]] </td>
+      </tr>
+    </div>
+    <p>
+      <a href="/himiko/nyuka3">リセット</a>
+    </p>
+    <p>
+      <a href="/himiko/nyuka4">入荷</a>
+    </p>
+  </div>
 
   <p>
     <a href="/himiko/nyuka">もどる</a>

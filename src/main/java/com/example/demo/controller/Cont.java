@@ -19,6 +19,7 @@ import com.example.demo.model.Stock;
 import com.example.demo.model.StockMapper;
 import com.example.demo.model.Zaiko;
 import com.example.demo.model.ZaikoMapper;
+import com.example.demo.model.nSchedule;
 
 @RequestMapping("/himiko")
 @Controller
@@ -31,6 +32,8 @@ public class Cont {
   StockMapper stmapper;
   @Autowired
   ZaikoMapper zmapper;
+  @Autowired
+  private nSchedule nSchedule;
 
   @GetMapping("login")
   public String login() {
@@ -65,7 +68,27 @@ public class Cont {
   }
 
   @PostMapping("nyuka2")
-  public String nyuka2(@RequestParam Integer item_id, @RequestParam Integer shop_id, @RequestParam Integer number) {
+  public String nyuka2(ModelMap model, @RequestParam Integer item_id, @RequestParam Integer shop_id,
+      @RequestParam Integer number) {
+    Stock item = new Stock();
+    item.setItem_id(item_id);
+    item.setShop_id(shop_id);
+    item.setNumber(number);
+
+    nSchedule.addItems(item);
+    model.addAttribute("itemlist", nSchedule);
+
+    return "nyuka1.html";
+  }
+
+  @GetMapping("nyuka3")
+  public String nyuka3() {
+    nSchedule.resetItems();
+    return "nyuka1.html";
+  }
+
+  @PostMapping("nyuka4")
+  public String nyuka4(@RequestParam Integer item_id, @RequestParam Integer shop_id, @RequestParam Integer number) {
     int flag = 0;
     Stock stock = new Stock();
     ArrayList<Stock> stocklist = stmapper.selectAllStock();
