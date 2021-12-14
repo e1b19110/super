@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.springframework.org/schema/security">
+
+<head>
+  <meta charset="utf-8">
+  <title>Super</title>
+</head>
+
+<body bgcolor="#ffffff">
+  <div th:if="${chats}">
+    <div th:each="chat,stat:${chats.chatlist}">
+      <p>[[${chat.name}]]:[[${chat.message}]]</p>
+    </div>
+  </div>
+  <form action="/himiko/chat1" method="post">
+    <p><input type="text" name="msg" /></p>
+    <input type="submit" value="送信"><input type="reset" value="リセット">
+  </form>
+</body>
+
+</html>
