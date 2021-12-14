@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -114,4 +115,14 @@ public class Cont {
     return "nyuka1.html";
   }
 
+  @GetMapping("chat")
+  public String chat() {
+    return "chat.html";
+  }
+
+  @PostMapping("chat1")
+  public String chat1(ModelMap model, @RequestParam String msg) {
+    model.addAttribute("msg", msg);
+    return "chat.html";
+  }
 }
