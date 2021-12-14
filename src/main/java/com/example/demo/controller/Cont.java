@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import java.security.Principal;
 
 import com.example.demo.model.Item;
 import com.example.demo.model.ItemMapper;
@@ -21,6 +22,7 @@ import com.example.demo.model.StockMapper;
 import com.example.demo.model.Zaiko;
 import com.example.demo.model.ZaikoMapper;
 import com.example.demo.model.nSchedule;
+import com.example.demo.model.Chat;
 
 @RequestMapping("/himiko")
 @Controller
@@ -35,6 +37,8 @@ public class Cont {
   ZaikoMapper zmapper;
   @Autowired
   private nSchedule nSchedule;
+  @Autowired
+  ArrayList<Chat> chatlist=new ArrayList();
 
   @GetMapping("login")
   public String login() {
@@ -121,8 +125,12 @@ public class Cont {
   }
 
   @PostMapping("chat1")
-  public String chat1(ModelMap model, @RequestParam String msg) {
-    model.addAttribute("msg", msg);
+  public String chat1(ModelMap model, @RequestParam String msg,Principal name) {
+    Chat chat=new Chat();
+    chat.setName(name.getName());
+    chat.setMessage(msg);
+    chatlist.add(chat);
+    model.addAttribute("chatlist",chatlist);
     return "chat.html";
   }
 }

@@ -7,8 +7,10 @@
 </head>
 
 <body bgcolor="#ffffff">
-  <div th:if="${msg}">
-    <p>[[${msg}]]</p>
+  <div th:if="${chatlist}">
+    <div th:each="chat,stat:${chatlist.chat}">
+          <p>[[${chat.name}]]:[[${chat.message}]]</p>
+    </div>
   </div>
   <form action="/himiko/chat1" method="post">
     <p><input type="text" name="msg" /></p>
