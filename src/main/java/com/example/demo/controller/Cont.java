@@ -23,6 +23,7 @@ import com.example.demo.model.Zaiko;
 import com.example.demo.model.ZaikoMapper;
 import com.example.demo.model.nSchedule;
 import com.example.demo.model.Chat;
+import com.example.demo.model.ChatList;
 
 @RequestMapping("/himiko")
 @Controller
@@ -38,7 +39,7 @@ public class Cont {
   @Autowired
   private nSchedule nSchedule;
   @Autowired
-  ArrayList<Chat> chatlist=new ArrayList();
+  ChatList clist;
 
   @GetMapping("login")
   public String login() {
@@ -125,12 +126,12 @@ public class Cont {
   }
 
   @PostMapping("chat1")
-  public String chat1(ModelMap model, @RequestParam String msg,Principal name) {
-    Chat chat=new Chat();
+  public String chat1(ModelMap model, @RequestParam String msg, Principal name) {
+    Chat chat = new Chat();
     chat.setName(name.getName());
     chat.setMessage(msg);
-    chatlist.add(chat);
-    model.addAttribute("chatlist",chatlist);
+    clist.addChat(chat);
+    model.addAttribute("chats", clist);
     return "chat.html";
   }
 }
