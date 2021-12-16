@@ -4,9 +4,14 @@
 <head>
   <meta charset="utf-8">
   <title>Super</title>
+  <style>
+    body {
+      background-color: #fff;
+    }
+  </style>
 </head>
 
-<body bgcolor="#ffffff">
+<body>
   <div th:if="${chats}">
     <div th:each="chat,stat:${chats.chatlist}">
       <p>[[${chat.name}]]:[[${chat.message}]]</p>
