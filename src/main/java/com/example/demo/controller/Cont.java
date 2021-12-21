@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import java.security.Principal;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import com.example.demo.model.Item;
 import com.example.demo.model.ItemMapper;
@@ -24,6 +25,7 @@ import com.example.demo.model.ZaikoMapper;
 import com.example.demo.model.nSchedule;
 import com.example.demo.model.Chat;
 import com.example.demo.model.ChatList;
+import com.example.demo.service.AsyncChat;
 
 @RequestMapping("/himiko")
 @Controller
@@ -40,6 +42,15 @@ public class Cont {
   private nSchedule nSchedule;
   @Autowired
   ChatList clist;
+  @Autowired
+  AsyncChat async;
+
+  @GetMapping("sse")
+  public SseEmitter sseChat() {
+    final SseEmitter sseEmitter = new SseEmitter();
+    this.async.asyncShowMatchList(sseEmitter);
+    return sseEmitter;
+  }
 
   @GetMapping("login")
   public String login() {
