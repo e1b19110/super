@@ -58,3 +58,11 @@ a{
 .button:hover{
   background-color: #b38900;
 }
+
+input{
+  width: 100%;
+}
+
+input.submit{
+  width: 45%;
+}
