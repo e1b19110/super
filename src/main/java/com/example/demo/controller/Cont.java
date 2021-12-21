@@ -69,7 +69,11 @@ public class Cont {
   }
 
   @GetMapping("nyuka1")
-  public String nyuka1() {
+  public String nyuka1(ModelMap model) {
+    ArrayList<Item> items = imapper.selectAllItems();
+    ArrayList<Shop> shops = shmapper.selectAllShop();
+    model.addAttribute("items", items);
+    model.addAttribute("shops", shops);
     return "nyuka1.html";
   }
 
@@ -83,18 +87,26 @@ public class Cont {
 
     nSchedule.addItems(item);
     model.addAttribute("itemlist", nSchedule);
+    ArrayList<Item> items = imapper.selectAllItems();
+    ArrayList<Shop> shops = shmapper.selectAllShop();
+    model.addAttribute("items", items);
+    model.addAttribute("shops", shops);
 
     return "nyuka1.html";
   }
 
   @GetMapping("nyuka3")
-  public String nyuka3() {
+  public String nyuka3(ModelMap model) {
     nSchedule.resetItems();
+    ArrayList<Item> items = imapper.selectAllItems();
+    ArrayList<Shop> shops = shmapper.selectAllShop();
+    model.addAttribute("items", items);
+    model.addAttribute("shops", shops);
     return "nyuka1.html";
   }
 
   @GetMapping("nyuka4")
-  public String nyuka4() {
+  public String nyuka4(ModelMap model) {
     int flag = 0;
     Stock stock = new Stock();
     ArrayList<Stock> stocklist = stmapper.selectAllStock();
@@ -117,6 +129,10 @@ public class Cont {
       }
     }
     nSchedule.resetItems();
+    ArrayList<Item> items = imapper.selectAllItems();
+    ArrayList<Shop> shops = shmapper.selectAllShop();
+    model.addAttribute("items", items);
+    model.addAttribute("shops", shops);
     return "nyuka1.html";
   }
 
