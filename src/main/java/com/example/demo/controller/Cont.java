@@ -157,8 +157,8 @@ public class Cont {
     Chat chat = new Chat();
     chat.setName(name.getName());
     chat.setMessage(msg);
-    clist.addChat(chat);
-    model.addAttribute("chats", clist);
+    ArrayList<Chat> chatlist = this.async.addChat(chat);
+    model.addAttribute("chats", chatlist);
     return "chat.html";
   }
 

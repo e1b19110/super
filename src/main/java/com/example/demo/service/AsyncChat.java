@@ -22,6 +22,12 @@ public class AsyncChat {
 
   boolean ChatUpdated = false;
 
+  public ArrayList<Chat> addChat(Chat chat) {
+    clist.addChat(chat);
+    ChatUpdated = true;
+    return clist.getChatlist();
+  }
+
   @Async
   public void asyncShowMatchList(SseEmitter emitter) {
     ChatUpdated = true;
@@ -38,7 +44,6 @@ public class AsyncChat {
       }
     } catch (Exception e) {
       // 例外の名前とメッセージだけ表示する
-      logger.warn("Exception:" + e.getClass().getName() + ":" + e.getMessage());
     } finally {
       emitter.complete();
     }

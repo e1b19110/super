@@ -9,14 +9,41 @@
       background-color: #fff;
     }
   </style>
+  <script>
+    window.onload = function () {
+      var sse = new EventSource('/himiko/sse');
+      sse.onmessage = function (event) {
+        console.log("sse.onmessage")
+        console.log(event.data);
+        var chatlist = JSON.parse(event.data);
+        var chat_table = "";
+        for (var i = 0; i < chatlist.length; i++) {
+          var bgn_tr = "<tr>";
+          var end_tr = "</tr>";
+          var idx = "<td>" + i + "</td>";
+          var f_name = "<td>" + chatlist[i].name + "</td>";
+          var f_price = "<td>" + chatlist[i].price + "</td>";
+          var f_proc = "<td>" + "<a href='/sample5/step8?id=" + chatlist[i].id + "'>購入</a>" + "</td>"
+          chat_table = chat_table + bgn_tr + idx + f_name + f_price + f_proc + end_tr;
+
+        }
+        console.log(chat_table);
+        var tbody = document.getElementById("chatlist");
+        tbody.innerHTML = chat_table;//idがchatlistのtbodyのHTMLを差し替える
+
+      }
+    }
+  </script>
 </head>
 
 <body>
-  <div th:if="${chats}">
-    <div th:each="chat,stat:${chats.chatlist}">
-      <p>[[${chat.name}]]:[[${chat.message}]]</p>
+  <div id="chatlist">
+    <div th:if="${chats}">
+      <div th:each="chat,stat:${chats}">
+        <p>[[${chat.name}]]:[[${chat.message}]]</p>
+      </div>
     </div>
-  </div>
+  </div>>
   <form action="/himiko/chat1" method="post">
     <p><input type="text" name="msg" /></p>
     <input type="submit" value="送信"><input type="reset" value="リセット">
