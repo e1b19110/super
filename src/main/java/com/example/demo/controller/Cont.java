@@ -150,4 +150,47 @@ public class Cont {
     model.addAttribute("chats", clist);
     return "chat.html";
   }
+
+  @GetMapping("syukka1")
+  public String syukka1() {
+    return "syukka.html";
+  }
+
+  @PostMapping("syukka2")
+  public String syukka2(ModelMap model, @RequestParam Integer item_id, @RequestParam Integer shop_id,
+      @RequestParam Integer number) {
+    int flag = 0;
+    int tmp = 0;
+    String print = "結果なし";
+    Stock item = new Stock();
+    item.setItem_id(item_id);
+    item.setShop_id(shop_id);
+    item.setNumber(number);
+    ArrayList<Stock> stocklist = stmapper.selectAllStock();
+    for (Stock stc : stocklist) {
+      if (item.getItem_id() == stc.getItem_id() && item.getShop_id() == stc.getShop_id()) {
+        if (item.getNumber() <= stc.getNumber()) {
+          tmp = stc.getNumber() - item.getNumber();
+          item.setNumber(tmp);
+          stmapper.updateById(item);
+          flag = 1;
+        } else {
+          flag = 2;
+        }
+        break;
+      } else {
+        flag = 3;
+      }
+    }
+    if (flag == 1) {
+      print = "出荷完了しました";
+    } else if (flag == 2) {
+      print = "エラー 在庫数より出荷数の方が多いです";
+
+    } else if (flag == 3) {
+      print = "エラー 商品が存在しません";
+    }
+    model.addAttribute("result", print);
+    return "syukka.html";
+  }
 }
