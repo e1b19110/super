@@ -1,3 +1,31 @@
 body{
   background-color: #e0e0ee;
 }
+
+table{
+  border: 1;
+  text-align: center;
+}
+
+table th,
+table td {
+  background: #fff;
+  padding: 5px 10px;
+}
+table tr:nth-child(odd) td {
+	background: #eee;
+}
+
+a{
+  color: #000;
+  text-decoration: none;
+}
+
+td a{
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+td a:hover{
+  background: rgb(180, 180, 255);
+}
