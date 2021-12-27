@@ -163,7 +163,9 @@ public class Cont {
   }
 
   @GetMapping("syukka1")
-  public String syukka1() {
+  public String syukka1(ModelMap model) {
+    ArrayList<Zaiko> zaikolist = zmapper.selectAllZaiko();
+    model.addAttribute("zaikolist", zaikolist);
     return "syukka.html";
   }
 
@@ -202,6 +204,8 @@ public class Cont {
       print = "エラー 商品が存在しません";
     }
     model.addAttribute("result", print);
+    ArrayList<Zaiko> zaikolist = zmapper.selectAllZaiko();
+    model.addAttribute("zaikolist", zaikolist);
     return "syukka.html";
   }
 }
