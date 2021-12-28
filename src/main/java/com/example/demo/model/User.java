@@ -3,8 +3,8 @@ package com.example.demo.model;
 public class User {
   int user_id;
   String user_name;
-  int shop_name;
-  
+  int shop_id;
+
   public int getUser_id() {
     return user_id;
   }
@@ -17,10 +17,10 @@ public class User {
   public void setUser_name(String user_name) {
     this.user_name = user_name;
   }
-  public int getShop_name() {
-    return shop_name;
+  public int getShop_id() {
+    return shop_id;
   }
-  public void setShop_name(int shop_name) {
-    this.shop_name = shop_name;
+  public void setShop_id(int shop_id) {
+    this.shop_id = shop_id;
   }
 }

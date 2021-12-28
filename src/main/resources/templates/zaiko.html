@@ -9,32 +9,8 @@
 </head>
 
 <body>
-  <div th:if="${shoplist}">
-    <a href="/himiko/login">
-      <button class="back-button">
-        もどる
-      </button>
-    </a>
-    <table>
-      <thead>
-        <tr>
-          <th>店番</th>
-          <th>店名</th>
-        </tr>
-      </thead>
-      <tbody>
-        <div th:each="shop,stat:${shoplist}">
-          <tr>
-            <td><a th:href="@{/himiko/zaiko/tempo(shop_id=${shop.shop_id})}">[[${shop.shop_id}]]</a></td>
-            <td><a th:href="@{/himiko/zaiko/tempo(shop_id=${shop.shop_id})}">[[${shop.shop_name}]]</a></td>
-          </tr>
-        </div>
-      </tbody>
-    </table>
-  </div>
-
   <div th:if="${zaiko}">
-    <a href="/himiko/zaiko">
+    <a href="/himiko/login">
       <button class="back-button">
         もどる
       </button>
