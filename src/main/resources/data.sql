@@ -63,3 +63,12 @@ INSERT INTO stock (shop_id,item_id,number) VALUES (7,13,17);
 INSERT INTO stock (shop_id,item_id,number) VALUES (8,4,17);
 INSERT INTO stock (shop_id,item_id,number) VALUES (8,8,17);
 INSERT INTO stock (shop_id,item_id,number) VALUES (8,9,17);
+
+INSERT INTO users (user_name,shop_id) VALUES ('いがき',1);
+INSERT INTO users (user_name,shop_id) VALUES ('ふくやす',2);
+INSERT INTO users (user_name,shop_id) VALUES ('user1',3);
+INSERT INTO users (user_name,shop_id) VALUES ('user2',4);
+INSERT INTO users (user_name,shop_id) VALUES ('いば',5);
+INSERT INTO users (user_name,shop_id) VALUES ('どい',6);
+INSERT INTO users (user_name,shop_id) VALUES ('たばた',7);
+INSERT INTO users (user_name,shop_id) VALUES ('よしだ',8);

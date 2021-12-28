@@ -22,6 +22,18 @@ public class Sample3AuthConfiguration extends WebSecurityConfigurerAdapter {
         .password("$2y$10$vz5WWjPAEOULDnM8Av/gvO25SEXEzbjddm1AZYTl/abJ8GKSdjQOC").roles("USER");
     auth.inMemoryAuthentication().withUser("user2")
         .password("$2y$10$tLcTuZmacIAMyxbE4yXqEO/tkgABsYJsiax/UUgIWB0IG0ALikIi6").roles("USER");
+    auth.inMemoryAuthentication().withUser("いがき")
+        .password("$2y$10$vz5WWjPAEOULDnM8Av/gvO25SEXEzbjddm1AZYTl/abJ8GKSdjQOC").roles("USER");
+    auth.inMemoryAuthentication().withUser("ふくやす")
+        .password("$2y$10$vz5WWjPAEOULDnM8Av/gvO25SEXEzbjddm1AZYTl/abJ8GKSdjQOC").roles("USER");
+    auth.inMemoryAuthentication().withUser("いば")
+        .password("$2y$10$vz5WWjPAEOULDnM8Av/gvO25SEXEzbjddm1AZYTl/abJ8GKSdjQOC").roles("USER");
+    auth.inMemoryAuthentication().withUser("どい")
+        .password("$2y$10$vz5WWjPAEOULDnM8Av/gvO25SEXEzbjddm1AZYTl/abJ8GKSdjQOC").roles("USER");
+    auth.inMemoryAuthentication().withUser("たばた")
+        .password("$2y$10$vz5WWjPAEOULDnM8Av/gvO25SEXEzbjddm1AZYTl/abJ8GKSdjQOC").roles("USER");
+    auth.inMemoryAuthentication().withUser("よしだ")
+        .password("$2y$10$vz5WWjPAEOULDnM8Av/gvO25SEXEzbjddm1AZYTl/abJ8GKSdjQOC").roles("USER");
 
     // $ sshrun htpasswd -nbBC 10 admin adm1n
     auth.inMemoryAuthentication().withUser("admin")
