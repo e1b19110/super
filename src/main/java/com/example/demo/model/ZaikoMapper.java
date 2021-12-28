@@ -19,6 +19,6 @@ public interface ZaikoMapper {
   ArrayList<Zaiko> selectByNId(int shop_id);
 
   @Select("select * from stock join items using (item_id) join shop using (shop_id)")
-  ArrayList<Zaiko> selectAllStock();
+  ArrayList<Zaiko> selectAllZaiko();
 
 }
