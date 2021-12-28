@@ -16,7 +16,6 @@
   <p>
   <form action="/himiko/nyuka2" method="post">
     <p><label for="item">アイテムID</label><input type="number" name="item_id" /></p><br>
-    <p><label for="tenpo">店舗ID</label><input type="number" name="shop_id" /></p><br>
     <p><label for="kosuu">個数</label><input type="number" name="number" /></p><br>
     <input type="submit" value="入荷"><input type="reset" value="リセット">
   </form>
@@ -26,7 +25,6 @@
     <h2>入荷予定リスト</h2>
     <div th:each="items,stat:${itemlist.items}">
       <tr>
-        <td>店舗ID:[[${items.shop_id}]] </td>
         <td>アイテムID:[[${items.item_id}]] </td>
         <td>個数:[[${items.number}]] </td>
       </tr>
@@ -63,20 +61,6 @@
               <td>[[${item.item_id}]] </td>
               <td>[[${item.item_name}]] </td>
               <td>[[${item.price}]] </td>
-            </tr>
-          </table>
-        </div>
-      </td>
-      <td valign="top">
-        <div th:if="${shops}">
-          <table border="1">
-            <tr>
-              <th>ショップID</th>
-              <th>ショップ名</th>
-            </tr>
-            <tr th:each="shop,stat:${shops}">
-              <td>[[${shop.shop_id}]] </td>
-              <td>[[${shop.shop_name}]] </td>
             </tr>
           </table>
         </div>

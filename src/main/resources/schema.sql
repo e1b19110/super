@@ -13,3 +13,8 @@ CREATE TABLE stock (
   number INT NOT NULL,
   primary key(shop_id,item_id)
 );
+CREATE TABLE users (
+  user_id INT IDENTITY,
+  user_name CHAR NOT NULL,
+  shop_id INT references shop(shop_id)
+);

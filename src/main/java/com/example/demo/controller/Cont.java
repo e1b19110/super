@@ -4,8 +4,6 @@ import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +18,8 @@ import com.example.demo.model.Shop;
 import com.example.demo.model.ShopMapper;
 import com.example.demo.model.Stock;
 import com.example.demo.model.StockMapper;
+import com.example.demo.model.User;
+import com.example.demo.model.UserMapper;
 import com.example.demo.model.Zaiko;
 import com.example.demo.model.ZaikoMapper;
 import com.example.demo.model.nSchedule;
@@ -39,6 +39,8 @@ public class Cont {
   @Autowired
   ZaikoMapper zmapper;
   @Autowired
+  UserMapper uMapper;
+  @Autowired
   private nSchedule nSchedule;
   @Autowired
   ChatList clist;
@@ -53,26 +55,39 @@ public class Cont {
   }
 
   @GetMapping("login")
-  public String login() {
+  public String login(ModelMap model, Principal prin) {
+    int id = Integer.parseInt(prin.getName());
+    User user = uMapper.selectById(id);
+    model.addAttribute("name", user.getUser_name());
+
     return "login.html";
   }
 
   @GetMapping("zaiko")
-  public String zaiko(ModelMap model) {
-    ArrayList<Shop> shoplist = shmapper.selectAllShop();
-    model.addAttribute("shoplist", shoplist);
-
-    return "zaiko.html";
-  }
-
-  @GetMapping("zaiko/tempo")
-  public String tempo(ModelMap model, @RequestParam int shop_id) {
-    ArrayList<Zaiko> zaiko1 = zmapper.selectById(shop_id);
+  public String zaiko(ModelMap model, Principal prin) {
+    int id = Integer.parseInt(prin.getName());
+    User user = uMapper.selectById(id);
+    ArrayList<Zaiko> zaiko1 = zmapper.selectById(user.getShop_id());
     model.addAttribute("zaiko", zaiko1);
     model.addAttribute("shop_name", zaiko1.get(0).getShop_name());
 
     return "zaiko.html";
   }
+
+  /*
+   * @GetMapping("zaiko") public String zaiko(ModelMap model) { ArrayList<Shop>
+   * shoplist = shmapper.selectAllShop(); model.addAttribute("shoplist",
+   * shoplist);
+   *
+   * return "zaiko.html"; }
+   *
+   * @GetMapping("zaiko/tempo") public String tempo(ModelMap model, @RequestParam
+   * int shop_id) { ArrayList<Zaiko> zaiko1 = zmapper.selectById(shop_id);
+   * model.addAttribute("zaiko", zaiko1); model.addAttribute("shop_name",
+   * zaiko1.get(0).getShop_name());
+   *
+   * return "zaiko.html"; }
+   */
 
   @GetMapping("nyuka")
   public String nyuka() {
@@ -82,26 +97,27 @@ public class Cont {
   @GetMapping("nyuka1")
   public String nyuka1(ModelMap model) {
     ArrayList<Item> items = imapper.selectAllItems();
-    ArrayList<Shop> shops = shmapper.selectAllShop();
+    // ArrayList<Shop> shops = shmapper.selectAllShop();
     model.addAttribute("items", items);
-    model.addAttribute("shops", shops);
+    // model.addAttribute("shops", shops);
     return "nyuka1.html";
   }
 
   @PostMapping("nyuka2")
-  public String nyuka2(ModelMap model, @RequestParam Integer item_id, @RequestParam Integer shop_id,
-      @RequestParam Integer number) {
+  public String nyuka2(ModelMap model, @RequestParam Integer item_id, @RequestParam Integer number, Principal prin) {
     Stock item = new Stock();
+    int id = Integer.parseInt(prin.getName());
+    User user = uMapper.selectById(id);
     item.setItem_id(item_id);
-    item.setShop_id(shop_id);
+    item.setShop_id(user.getShop_id());
     item.setNumber(number);
 
     nSchedule.addItems(item);
     model.addAttribute("itemlist", nSchedule);
     ArrayList<Item> items = imapper.selectAllItems();
-    ArrayList<Shop> shops = shmapper.selectAllShop();
+    // ArrayList<Shop> shops = shmapper.selectAllShop();
     model.addAttribute("items", items);
-    model.addAttribute("shops", shops);
+    // model.addAttribute("shops", shops);
 
     return "nyuka1.html";
   }
@@ -110,9 +126,9 @@ public class Cont {
   public String nyuka3(ModelMap model) {
     nSchedule.resetItems();
     ArrayList<Item> items = imapper.selectAllItems();
-    ArrayList<Shop> shops = shmapper.selectAllShop();
+//    ArrayList<Shop> shops = shmapper.selectAllShop();
     model.addAttribute("items", items);
-    model.addAttribute("shops", shops);
+//    model.addAttribute("shops", shops);
     return "nyuka1.html";
   }
 
@@ -141,9 +157,9 @@ public class Cont {
     }
     nSchedule.resetItems();
     ArrayList<Item> items = imapper.selectAllItems();
-    ArrayList<Shop> shops = shmapper.selectAllShop();
+//    ArrayList<Shop> shops = shmapper.selectAllShop();
     model.addAttribute("items", items);
-    model.addAttribute("shops", shops);
+//    model.addAttribute("shops", shops);
     return "nyuka1.html";
   }
 
@@ -163,21 +179,26 @@ public class Cont {
   }
 
   @GetMapping("syukka1")
-  public String syukka1(ModelMap model) {
-    ArrayList<Zaiko> zaikolist = zmapper.selectAllZaiko();
+  public String syukka1(ModelMap model,Principal prin) {
+    int id = Integer.parseInt(prin.getName());
+    User user = uMapper.selectById(id);
+    ArrayList<Zaiko> zaikolist = zmapper.selectById(user.getShop_id());
     model.addAttribute("zaikolist", zaikolist);
     return "syukka.html";
   }
 
   @PostMapping("syukka2")
-  public String syukka2(ModelMap model, @RequestParam Integer item_id, @RequestParam Integer shop_id,
+  public String syukka2(ModelMap model, @RequestParam Integer item_id, Principal prin,
       @RequestParam Integer number) {
     int flag = 0;
     int tmp = 0;
     String print = "結果なし";
     Stock item = new Stock();
+    int id = Integer.parseInt(prin.getName());
+    User user = uMapper.selectById(id);
+    
     item.setItem_id(item_id);
-    item.setShop_id(shop_id);
+    item.setShop_id(user.getShop_id());
     item.setNumber(number);
     ArrayList<Stock> stocklist = stmapper.selectAllStock();
     for (Stock stc : stocklist) {
@@ -204,7 +225,7 @@ public class Cont {
       print = "エラー 商品が存在しません";
     }
     model.addAttribute("result", print);
-    ArrayList<Zaiko> zaikolist = zmapper.selectAllZaiko();
+    ArrayList<Zaiko> zaikolist = zmapper.selectById(user.getShop_id());
     model.addAttribute("zaikolist", zaikolist);
     return "syukka.html";
   }
