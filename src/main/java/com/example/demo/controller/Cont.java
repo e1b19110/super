@@ -4,8 +4,6 @@ import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +18,8 @@ import com.example.demo.model.Shop;
 import com.example.demo.model.ShopMapper;
 import com.example.demo.model.Stock;
 import com.example.demo.model.StockMapper;
+import com.example.demo.model.User;
+import com.example.demo.model.UserMapper;
 import com.example.demo.model.Zaiko;
 import com.example.demo.model.ZaikoMapper;
 import com.example.demo.model.nSchedule;
@@ -39,6 +39,8 @@ public class Cont {
   @Autowired
   ZaikoMapper zmapper;
   @Autowired
+  UserMapper uMapper;
+  @Autowired
   private nSchedule nSchedule;
   @Autowired
   ChatList clist;
@@ -53,7 +55,11 @@ public class Cont {
   }
 
   @GetMapping("login")
-  public String login() {
+  public String login(ModelMap model, Principal prin) {
+    int id = Integer.parseInt(prin.getName());
+    User user = uMapper.selectById(id);
+    model.addAttribute("name",user.getUser_name());
+
     return "login.html";
   }
 

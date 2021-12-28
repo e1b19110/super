@@ -18,21 +18,21 @@ public class Sample3AuthConfiguration extends WebSecurityConfigurerAdapter {
 
     // sshrun htpasswd -nbBC 10 user1 p@ss
     // sshrun htpasswd -nbBC 10 user2 pass
-    auth.inMemoryAuthentication().withUser("user1")
+    auth.inMemoryAuthentication().withUser("1")
         .password("$2y$10$vz5WWjPAEOULDnM8Av/gvO25SEXEzbjddm1AZYTl/abJ8GKSdjQOC").roles("USER");
-    auth.inMemoryAuthentication().withUser("user2")
+    auth.inMemoryAuthentication().withUser("2")
+        .password("$2y$10$vz5WWjPAEOULDnM8Av/gvO25SEXEzbjddm1AZYTl/abJ8GKSdjQOC").roles("USER");
+    auth.inMemoryAuthentication().withUser("3")
+        .password("$2y$10$vz5WWjPAEOULDnM8Av/gvO25SEXEzbjddm1AZYTl/abJ8GKSdjQOC").roles("USER");
+    auth.inMemoryAuthentication().withUser("4")
         .password("$2y$10$tLcTuZmacIAMyxbE4yXqEO/tkgABsYJsiax/UUgIWB0IG0ALikIi6").roles("USER");
-    auth.inMemoryAuthentication().withUser("いがき")
+    auth.inMemoryAuthentication().withUser("5")
         .password("$2y$10$vz5WWjPAEOULDnM8Av/gvO25SEXEzbjddm1AZYTl/abJ8GKSdjQOC").roles("USER");
-    auth.inMemoryAuthentication().withUser("ふくやす")
+    auth.inMemoryAuthentication().withUser("6")
         .password("$2y$10$vz5WWjPAEOULDnM8Av/gvO25SEXEzbjddm1AZYTl/abJ8GKSdjQOC").roles("USER");
-    auth.inMemoryAuthentication().withUser("いば")
+    auth.inMemoryAuthentication().withUser("7")
         .password("$2y$10$vz5WWjPAEOULDnM8Av/gvO25SEXEzbjddm1AZYTl/abJ8GKSdjQOC").roles("USER");
-    auth.inMemoryAuthentication().withUser("どい")
-        .password("$2y$10$vz5WWjPAEOULDnM8Av/gvO25SEXEzbjddm1AZYTl/abJ8GKSdjQOC").roles("USER");
-    auth.inMemoryAuthentication().withUser("たばた")
-        .password("$2y$10$vz5WWjPAEOULDnM8Av/gvO25SEXEzbjddm1AZYTl/abJ8GKSdjQOC").roles("USER");
-    auth.inMemoryAuthentication().withUser("よしだ")
+    auth.inMemoryAuthentication().withUser("8")
         .password("$2y$10$vz5WWjPAEOULDnM8Av/gvO25SEXEzbjddm1AZYTl/abJ8GKSdjQOC").roles("USER");
 
     // $ sshrun htpasswd -nbBC 10 admin adm1n
