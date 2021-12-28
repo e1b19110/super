@@ -1,14 +1,17 @@
 package com.example.demo.model;
 
+import java.util.Date;
+
 public class Log {
   int log_id;
+  Date date;
   int user_id;
   int item_id;
   int send_shop_id;
   int recv_shop_id;
   int number;
   String msg;
-  
+
   public int getLog_id() {
     return log_id;
   }
@@ -51,6 +54,12 @@ public class Log {
   public void setMsg(String msg) {
     this.msg = msg;
   }
+  public Date getDate() {
+    return date;
+  }
+  public void setDate(Date date) {
+    this.date = date;
+  }
 
-  
+
 }

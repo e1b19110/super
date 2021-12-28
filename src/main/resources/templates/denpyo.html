@@ -3,35 +3,40 @@
 
 <head>
   <meta charset="utf-8">
-  <title>zaiko</title>
+  <title>denpyo</title>
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="/css/zaiko.css">
 </head>
 
 <body>
-  <div th:if="${zaiko}">
+  <div th:if="${logs}">
     <a href="/himiko/login" class="back">
       <button class="back-button">
         もどる
       </button>
     </a>
-    <h2>[[${shop_name}]]</h2>
+    <h2>伝票</h2>
     <table>
       <thead>
         <tr>
+          <th>日付</th>
+          <th>ユーザーID</th>
           <th>商品ID</th>
-          <th>商品名</th>
-          <th>在庫数</th>
-          <th>単価</th>
+          <th>出荷元店舗ID</th>
+          <th>出荷先店舗ID</th>
+          <th>個数</th>
+          <th>与件</th>
         </tr>
       </thead>
       <tbody>
-        <div th:each="zaiko,stat:${zaiko}">
+        <div th:each="log,stat:${logs}">
           <tr>
-            <td>[[${zaiko.item_id}]]</td>
-            <td>[[${zaiko.item_name}]]</td>
-            <td>[[${zaiko.number}]]</td>
-            <td>[[${zaiko.price}]]</td>
+            <td>[[${log.date}]]</td>
+            <td>[[${log.user_id}]]</td>
+            <td>[[${log.item_id}]]</td>
+            <td>[[${log.send_shop_id}]]</td>
+            <td>[[${log.recv_shop_id}]]</td>
+            <td>[[${log.number}]]</td>
           </tr>
         </div>
       </tbody>

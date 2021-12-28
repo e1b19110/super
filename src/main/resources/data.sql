@@ -73,4 +73,4 @@ INSERT INTO users (user_name,shop_id) VALUES ('どい',6);
 INSERT INTO users (user_name,shop_id) VALUES ('たばた',7);
 INSERT INTO users (user_name,shop_id) VALUES ('よしだ',8);
 
-INSERT INTO logs (user_id,item_id,send_shop_id,recv_shop_id,number,msg) VALUES (1,1,1,2,5,'test');
+INSERT INTO logs (date,user_id,item_id,send_shop_id,recv_shop_id,number,msg) VALUES ('2021-3-15',1,1,1,2,5,'test');

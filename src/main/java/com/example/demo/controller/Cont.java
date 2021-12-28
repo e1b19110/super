@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -188,6 +189,8 @@ public class Cont {
     User user = uMapper.selectById(id);
     ArrayList<Zaiko> zaikolist = zmapper.selectById(user.getShop_id());
     model.addAttribute("zaikolist", zaikolist);
+    ArrayList<Shop> shops = shmapper.selectAllShop();
+    model.addAttribute("shops", shops);
     return "syukka.html";
   }
 
@@ -231,7 +234,10 @@ public class Cont {
     model.addAttribute("result", print);
     ArrayList<Zaiko> zaikolist = zmapper.selectById(user.getShop_id());
     model.addAttribute("zaikolist", zaikolist);
+    ArrayList<Shop> shops = shmapper.selectAllShop();
+    model.addAttribute("shops", shops);
     Log log = new Log();
+    log.setDate(new Date());
     log.setUser_id(id);
     log.setItem_id(item_id);
     log.setSend_shop_id(user.getShop_id());
@@ -240,5 +246,12 @@ public class Cont {
     log.setMsg(msg);
     lMapper.insertLog(log);
     return "syukka.html";
+  }
+
+  @GetMapping("denpyo")
+  public String denpyo(ModelMap model) {
+    ArrayList<Log> logs = lMapper.selectAllLogs();
+    model.addAttribute("logs", logs);
+    return "denpyo.html";
   }
 }

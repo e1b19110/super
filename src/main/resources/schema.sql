@@ -20,6 +20,7 @@ CREATE TABLE users (
 );
 CREATE TABLE logs (
   log_id INT IDENTITY,
+  date DATE,
   user_id INT references users(user_id),
   item_id INT references items(item_id),
   send_shop_id INT references shop(shop_id),
