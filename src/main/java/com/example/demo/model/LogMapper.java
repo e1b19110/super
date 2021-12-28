@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Select;
 
 @Mapper
 public interface LogMapper {
-  @Insert("insert into log (user_id,item_id,send_shop_id,recv_shop_id,number,msg) values (#{user_id},#{item_id},#{send_shop_id},#{recv_shop_id},#{nunber},#{msg});")
+  @Insert("insert into logs (user_id,item_id,send_shop_id,recv_shop_id,number,msg) values (#{user_id},#{item_id},#{send_shop_id},#{recv_shop_id},#{number},#{msg});")
   @Options(useGeneratedKeys = true, keyColumn = "log_id", keyProperty = "log_id")
   void insertLog(Log log);
 
