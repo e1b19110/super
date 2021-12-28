@@ -1,6 +1,7 @@
 <head>
   <meta charset="utf-8">
   <title>Super</title>
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body bgcolor="#e0e0ee">
@@ -14,9 +15,24 @@
   </form>
   </p>
 
-  <div th:if="${result}">
-    [[${result}]]
-  </div>
+  <table th:if="${zaikolist}" border="1">
+    <tr>
+      <th>ショップID</th>
+      <th>ショップ名</th>
+      <th>商品ID</th>
+      <th>商品名</th>
+      <th>単価</th>
+      <th>在庫数</th>
+    </tr>
+    <tr th:each="zaiko,stat:${zaikolist}">
+      <td align="center">[[${zaiko.shop_id}]]</td>
+      <td align="center">[[${zaiko.shop_name}]]</td>
+      <td align="center">[[${zaiko.item_id}]]</td>
+      <td align="center">[[${zaiko.item_name}]]</td>
+      <td align="center">[[${zaiko.price}]]</td>
+      <td align="center">[[${zaiko.number}]]</td>
+    </tr>
+  </table>
 
   <p>
     <a href="/himiko/login">もどる</a>
