@@ -179,21 +179,26 @@ public class Cont {
   }
 
   @GetMapping("syukka1")
-  public String syukka1(ModelMap model) {
-    ArrayList<Zaiko> zaikolist = zmapper.selectAllZaiko();
+  public String syukka1(ModelMap model,Principal prin) {
+    int id = Integer.parseInt(prin.getName());
+    User user = uMapper.selectById(id);
+    ArrayList<Zaiko> zaikolist = zmapper.selectById(user.getShop_id());
     model.addAttribute("zaikolist", zaikolist);
     return "syukka.html";
   }
 
   @PostMapping("syukka2")
-  public String syukka2(ModelMap model, @RequestParam Integer item_id, @RequestParam Integer shop_id,
+  public String syukka2(ModelMap model, @RequestParam Integer item_id, Principal prin,
       @RequestParam Integer number) {
     int flag = 0;
     int tmp = 0;
     String print = "結果なし";
     Stock item = new Stock();
+    int id = Integer.parseInt(prin.getName());
+    User user = uMapper.selectById(id);
+    
     item.setItem_id(item_id);
-    item.setShop_id(shop_id);
+    item.setShop_id(user.getShop_id());
     item.setNumber(number);
     ArrayList<Stock> stocklist = stmapper.selectAllStock();
     for (Stock stc : stocklist) {
@@ -220,7 +225,7 @@ public class Cont {
       print = "エラー 商品が存在しません";
     }
     model.addAttribute("result", print);
-    ArrayList<Zaiko> zaikolist = zmapper.selectAllZaiko();
+    ArrayList<Zaiko> zaikolist = zmapper.selectById(user.getShop_id());
     model.addAttribute("zaikolist", zaikolist);
     return "syukka.html";
   }
