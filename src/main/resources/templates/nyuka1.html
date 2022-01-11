@@ -9,9 +9,15 @@
     }
   </style>
   <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/zaiko.css">
 </head>
 
 <body>
+  <a href="/himiko/nyuka" class="back">
+    <button class="back-button">
+      もどる
+    </button>
+  </a>
   <h1>入荷処理</h1>
   <p>
   <form action="/himiko/nyuka2" method="post">
@@ -44,9 +50,6 @@
       <th th:if="${items}">
         アイテムリスト
       </th>
-      <th th:if="${shops}">
-        ショップリスト
-      </th>
     </tr>
     <tr>
       <td valign="top">
@@ -67,9 +70,5 @@
       </td>
     </tr>
   </table>
-
-  <p>
-    <a href="/himiko/nyuka">もどる</a>
-  </p>
 
 </body>

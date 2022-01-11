@@ -1,6 +1,8 @@
 package com.example.demo.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import java.security.Principal;
+
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import com.example.demo.model.Item;
@@ -26,6 +29,8 @@ import com.example.demo.model.nSchedule;
 import com.example.demo.model.Chat;
 import com.example.demo.model.ChatList;
 import com.example.demo.service.AsyncChat;
+import com.example.demo.model.Log;
+import com.example.demo.model.LogMapper;
 
 @RequestMapping("/himiko")
 @Controller
@@ -40,6 +45,8 @@ public class Cont {
   ZaikoMapper zmapper;
   @Autowired
   UserMapper uMapper;
+  @Autowired
+  LogMapper lMapper;
   @Autowired
   private nSchedule nSchedule;
   @Autowired
@@ -126,9 +133,9 @@ public class Cont {
   public String nyuka3(ModelMap model) {
     nSchedule.resetItems();
     ArrayList<Item> items = imapper.selectAllItems();
-//    ArrayList<Shop> shops = shmapper.selectAllShop();
+    // ArrayList<Shop> shops = shmapper.selectAllShop();
     model.addAttribute("items", items);
-//    model.addAttribute("shops", shops);
+    // model.addAttribute("shops", shops);
     return "nyuka1.html";
   }
 
@@ -157,9 +164,9 @@ public class Cont {
     }
     nSchedule.resetItems();
     ArrayList<Item> items = imapper.selectAllItems();
-//    ArrayList<Shop> shops = shmapper.selectAllShop();
+    // ArrayList<Shop> shops = shmapper.selectAllShop();
     model.addAttribute("items", items);
-//    model.addAttribute("shops", shops);
+    // model.addAttribute("shops", shops);
     return "nyuka1.html";
   }
 
@@ -179,24 +186,26 @@ public class Cont {
   }
 
   @GetMapping("syukka1")
-  public String syukka1(ModelMap model,Principal prin) {
+  public String syukka1(ModelMap model, Principal prin) {
     int id = Integer.parseInt(prin.getName());
     User user = uMapper.selectById(id);
     ArrayList<Zaiko> zaikolist = zmapper.selectById(user.getShop_id());
     model.addAttribute("zaikolist", zaikolist);
+    ArrayList<Shop> shops = shmapper.selectAllShop();
+    model.addAttribute("shops", shops);
     return "syukka.html";
   }
 
   @PostMapping("syukka2")
-  public String syukka2(ModelMap model, @RequestParam Integer item_id, Principal prin,
-      @RequestParam Integer number) {
+  public String syukka2(ModelMap model, @RequestParam Integer item_id, Principal prin, @RequestParam Integer number,
+      @RequestParam Integer recv_shop_id, @RequestParam String msg) {
     int flag = 0;
     int tmp = 0;
     String print = "結果なし";
     Stock item = new Stock();
     int id = Integer.parseInt(prin.getName());
     User user = uMapper.selectById(id);
-    
+
     item.setItem_id(item_id);
     item.setShop_id(user.getShop_id());
     item.setNumber(number);
@@ -227,6 +236,27 @@ public class Cont {
     model.addAttribute("result", print);
     ArrayList<Zaiko> zaikolist = zmapper.selectById(user.getShop_id());
     model.addAttribute("zaikolist", zaikolist);
+    ArrayList<Shop> shops = shmapper.selectAllShop();
+    model.addAttribute("shops", shops);
+    Date date = new Date(); // 今日の日付
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+    String strDate = dateFormat.format(date);
+    Log log = new Log();
+    log.setDate(strDate);
+    log.setUser_id(id);
+    log.setItem_id(item_id);
+    log.setSend_shop_id(user.getShop_id());
+    log.setRecv_shop_id(recv_shop_id);
+    log.setNumber(number);
+    log.setMsg(msg);
+    lMapper.insertLog(log);
     return "syukka.html";
+  }
+
+  @GetMapping("denpyo")
+  public String denpyo(ModelMap model) {
+    ArrayList<Log> logs = lMapper.selectAllLogs();
+    model.addAttribute("logs", logs);
+    return "denpyo.html";
   }
 }
