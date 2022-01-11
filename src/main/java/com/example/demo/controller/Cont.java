@@ -206,6 +206,12 @@ public class Cont {
     int id = Integer.parseInt(prin.getName());
     User user = uMapper.selectById(id);
 
+   /* if (item_id == null || number == null || recv_shop_id == null || msg == null) {
+      String msgError = "全ての空欄を埋めてください";
+      model.addAttribute("msge", msgError);
+      return "syukka.html";
+    }*/
+
     item.setItem_id(item_id);
     item.setShop_id(user.getShop_id());
     item.setNumber(number);
