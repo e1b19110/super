@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.text.SimpleDateFormat;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import java.security.Principal;
+
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import com.example.demo.model.Item;
@@ -236,8 +238,11 @@ public class Cont {
     model.addAttribute("zaikolist", zaikolist);
     ArrayList<Shop> shops = shmapper.selectAllShop();
     model.addAttribute("shops", shops);
+    Date date = new Date(); // 今日の日付
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+    String strDate = dateFormat.format(date);
     Log log = new Log();
-    log.setDate(new Date().toString());
+    log.setDate(strDate);
     log.setUser_id(id);
     log.setItem_id(item_id);
     log.setSend_shop_id(user.getShop_id());
