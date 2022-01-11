@@ -237,7 +237,7 @@ public class Cont {
     ArrayList<Shop> shops = shmapper.selectAllShop();
     model.addAttribute("shops", shops);
     Log log = new Log();
-    log.setDate(new Date());
+    log.setDate(new Date().toString());
     log.setUser_id(id);
     log.setItem_id(item_id);
     log.setSend_shop_id(user.getShop_id());

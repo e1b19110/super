@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Log {
   int log_id;
-  Date date;
+  String date;
   int user_id;
   int item_id;
   int send_shop_id;
@@ -54,10 +54,10 @@ public class Log {
   public void setMsg(String msg) {
     this.msg = msg;
   }
-  public Date getDate() {
+  public String getDate() {
     return date;
   }
-  public void setDate(Date date) {
+  public void setDate(String date) {
     this.date = date;
   }
 
