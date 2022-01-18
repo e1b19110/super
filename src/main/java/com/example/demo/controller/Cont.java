@@ -178,7 +178,7 @@ public class Cont {
   @PostMapping("chat1")
   public String chat1(ModelMap model, @RequestParam String msg, Principal name) {
     Chat chat = new Chat();
-    chat.setName(name.getName());
+    chat.setName(uMapper.selectUserNameByUserId(name.getName()));
     chat.setMessage(msg);
     ArrayList<Chat> chatlist = this.async.addChat(chat);
     model.addAttribute("chats", chatlist);
