@@ -5,68 +5,58 @@
   <link rel="stylesheet" href="/css/zaiko.css">
 </head>
 
-<body bgcolor="#e0e0ee">
+<body>
   <a href="/himiko/nyuka" class="back">
     <button class="back-button">
       もどる
     </button>
   </a>
   <h1>出荷処理</h1>
-  <p>
   <form action="/himiko/syukka2" method="post">
-    <p><label for="item">出荷先店舗ID</label><input type="number" name="recv_shop_id" required /></p><br>
-    <p><label for="item">アイテムID</label><input type="number" name="item_id" required /></p><br>
-    <p><label for="kosuu">個数</label><input type="number" name="number" required /></p><br>
-    <p>与件<input type="text" name="msg" /></p><br>
-    <input type="submit" value="出荷"><input type="reset" value="リセット">
+    <p>出荷先店舗ID<input type="number" name="recv_shop_id" required /></p>
+    <p>アイテムID<input type="number" name="item_id" required /></p>
+    <p>個数<input type="number" name="number" required /></p>
+    <p>与件<input type="text" name="msg" /></p>
+    <input type="submit" value="出荷">
+    <input type="reset" value="リセット">
   </form>
-  </p>
 
   <p th:if="${result}">[[${result}]]</p>
 
-  <table>
-    <tr>
-      <th th:if="${zaikolist}">
-        在庫リスト
-      </th>
-      <th th:if="${shops}">
-        ショップリスト
-      </th>
-    </tr>
-    <tr>
-      <td valign="top">
-        <div th:if="${zaikolist}">
-          <table th:if="${zaikolist}" border="1">
-            <tr>
-              <th>商品ID</th>
-              <th>商品名</th>
-              <th>単価</th>
-              <th>在庫数</th>
-            </tr>
-            <tr th:each="zaiko,stat:${zaikolist}">
-              <td align="center">[[${zaiko.item_id}]]</td>
-              <td align="center">[[${zaiko.item_name}]]</td>
-              <td align="center">[[${zaiko.price}]]</td>
-              <td align="center">[[${zaiko.number}]]</td>
-            </tr>
-          </table>
-        </div>
-      </td>
-      <td valign="top">
-        <div th:if="${shops}">
-          <table border="1">
-            <tr>
-              <th>店舗ID</th>
-              <th>店舗名</th>
-            </tr>
-            <tr th:each="shop,stat:${shops}">
-              <td>[[${shop.shop_id}]] </td>
-              <td>[[${shop.shop_name}]] </td>
-            </tr>
-          </table>
-        </div>
-      </td>
-    </tr>
-  </table>
-
+  <div class="flex">
+    <div th:if="${zaikolist}">
+      <table>
+        <tr>
+          <th colspan="4">在庫一覧</th>
+        </tr>
+        <tr>
+          <th>商品ID</th>
+          <th>商品名</th>
+          <th>単価</th>
+          <th>在庫数</th>
+        </tr>
+        <tr th:each="zaiko,stat:${zaikolist}">
+          <td align="center">[[${zaiko.item_id}]]</td>
+          <td align="center">[[${zaiko.item_name}]]</td>
+          <td align="center">[[${zaiko.price}]]</td>
+          <td align="center">[[${zaiko.number}]]</td>
+        </tr>
+      </table>
+    </div>
+    <div th:if="${shops}">
+      <table>
+        <tr>
+          <th colspan="4">店舗一覧</th>
+        </tr>
+        <tr>
+          <th>店舗ID</th>
+          <th>店舗名</th>
+        </tr>
+        <tr th:each="shop,stat:${shops}">
+          <td>[[${shop.shop_id}]] </td>
+          <td>[[${shop.shop_name}]] </td>
+        </tr>
+      </table>
+    </div>
+  </div>
 </body>

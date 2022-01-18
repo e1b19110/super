@@ -1,13 +1,6 @@
 <head>
   <meta charset="utf-8">
   <title>Super</title>
-  <style>
-    label {
-      display: inline-block;
-      text-align: left;
-      width: 150px;
-    }
-  </style>
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="/css/zaiko.css">
 </head>
@@ -18,44 +11,42 @@
       もどる
     </button>
   </a>
-  <h1>入荷処理</h1>
-  <p>
-  <form action="/himiko/nyuka2" method="post">
-    <p><label for="item">アイテムID</label><input type="number" name="item_id" required /></p><br>
-    <p><label for="kosuu">個数</label><input type="number" name="number" required /></p><br>
-    <p><input type="submit" value="入荷"></p>
-    <p><input type="reset" value="リセット"></p>
-  </form>
-  </p>
 
-  <div th:if="${itemlist}">
-    <h2>入荷予定リスト</h2>
-    <div th:each="items,stat:${itemlist.items}">
-      <tr>
-        <td>アイテムID:[[${items.item_id}]] </td>
-        <td>個数:[[${items.number}]] </td>
-      </tr>
+  <div class="flex">
+    <div>
+      <h1>入荷処理</h1>
+      <form action="/himiko/nyuka2" method="post">
+        <p>アイテムID<input type="number" name="item_id" required /></p>
+        <p>個数<input type="number" name="number" required /></p>
+        <input type="submit" value="セット">
+        <input type="reset" value="リセット">
+      </form>
+
+      <div th:if="${itemlist}">
+        <table>
+          <tr>
+            <th colspan="4">入荷予定リスト</th>
+          </tr>
+          <tr>
+            <th>アイテムID</th>
+            <th>個数</th>
+          </tr>
+          <tr th:each="items,stat:${itemlist.items}">
+            <td align="center">[[${items.item_id}]]</td>
+            <td align="center">[[${items.number}]]</td>
+          </tr>
+        </table>
+        <a href="/himiko/nyuka4"><button>入荷</button></a>
+        <a href="/himiko/nyuka3"><button>リセット</button></a>
+      </div>
     </div>
-
-    <p>
-      <a href="/himiko/nyuka4"><button>入荷</button></a>
-    </p>
-
-    <p>
-      <a href="/himiko/nyuka3"><button>リセット</button></a>
-    </p>
-  </div>
-
-  <table>
-    <tr>
-      <th th:if="${items}">
-        アイテムリスト
-      </th>
-    </tr>
-    <tr>
-      <td valign="top">
+    <div>
+      <table>
         <div th:if="${items}">
-          <table border="1">
+          <table>
+            <tr>
+              <th colspan="4">商品一覧</th>
+            </tr>
             <tr>
               <th>アイテムID</th>
               <th>アイテム名</th>
@@ -68,8 +59,7 @@
             </tr>
           </table>
         </div>
-      </td>
-    </tr>
-  </table>
-
+      </table>
+    </div>
+  </div>
 </body>

@@ -29,3 +29,31 @@ td a{
 td a:hover{
   background: rgb(180, 180, 255);
 }
+
+.base{
+  display: flex;
+  flex-direction: column;
+  width: 100vw - 10px;
+  height: 80vh;
+}
+
+.sub-base{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 10%;
+}
+
+.class{
+  text-align: center;
+  width: 50%;
+  height: 100%;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex div {
+  width: 50%;
+}

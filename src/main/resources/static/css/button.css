@@ -1,0 +1,12 @@
+button{
+  width: 90%;
+  height: 90%;
+  background-color: #ffc400;
+  border-radius: 10px;
+  outline: none;
+  font-size: 30px;
+}
+
+button:hover{
+  background-color: #b38900;
+}
