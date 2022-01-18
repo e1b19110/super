@@ -13,9 +13,9 @@
   </a>
   <h1>出荷処理</h1>
   <form action="/himiko/syukka2" method="post">
-    <p>出荷先店舗ID<input type="number" name="recv_shop_id" required /></p>
-    <p>アイテムID<input type="number" name="item_id" required /></p>
-    <p>個数<input type="number" name="number" required /></p>
+    <p>出荷先店舗ID<input type="number" name="recv_shop_id" min="1" required /></p>
+    <p>アイテムID<input type="number" name="item_id" min="1" required /></p>
+    <p>個数<input type="number" name="number" min="1" required /></p>
     <p>与件<input type="text" name="msg" /></p>
     <input type="submit" value="出荷">
     <input type="reset" value="リセット">

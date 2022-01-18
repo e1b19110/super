@@ -16,8 +16,8 @@
     <div>
       <h1>入荷処理</h1>
       <form action="/himiko/nyuka2" method="post">
-        <p>アイテムID<input type="number" name="item_id" required /></p>
-        <p>個数<input type="number" name="number" required /></p>
+        <p>アイテムID<input type="number" name="item_id" min="1" required /></p>
+        <p>個数<input type="number" name="number" min="1" required /></p>
         <input type="submit" value="セット">
         <input type="reset" value="リセット">
       </form>
