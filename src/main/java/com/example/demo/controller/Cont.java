@@ -206,56 +206,70 @@ public class Cont {
     int id = Integer.parseInt(prin.getName());
     User user = uMapper.selectById(id);
 
-   /* if (item_id == null || number == null || recv_shop_id == null || msg == null) {
-      String msgError = "全ての空欄を埋めてください";
-      model.addAttribute("msge", msgError);
-      return "syukka.html";
-    }*/
-
+    /*
+     * if (item_id == null || number == null || recv_shop_id == null || msg == null)
+     * { String msgError = "全ての空欄を埋めてください"; model.addAttribute("msge", msgError);
+     * return "syukka.html"; }
+     */
+    int endflag = 0;
     item.setItem_id(item_id);
     item.setShop_id(user.getShop_id());
     item.setNumber(number);
-    ArrayList<Stock> stocklist = stmapper.selectAllStock();
-    for (Stock stc : stocklist) {
-      if (item.getItem_id() == stc.getItem_id() && item.getShop_id() == stc.getShop_id()) {
-        if (item.getNumber() <= stc.getNumber()) {
-          tmp = stc.getNumber() - item.getNumber();
-          item.setNumber(tmp);
-          stmapper.updateById(item);
-          flag = 1;
-        } else {
-          flag = 2;
-        }
+    ArrayList<Shop> shoplist = shmapper.selectAllShop();
+    for (Shop sh : shoplist) {
+      if (recv_shop_id == sh.getShop_id()) {
+        endflag = 1;
         break;
-      } else {
-        flag = 3;
       }
     }
-    if (flag == 1) {
-      print = "出荷完了しました";
-    } else if (flag == 2) {
-      print = "エラー 在庫数より出荷数の方が多いです";
+    if (endflag == 1) {
+      ArrayList<Stock> stocklist = stmapper.selectAllStock();
+      for (Stock stc : stocklist) {
+        if (item.getItem_id() == stc.getItem_id() && item.getShop_id() == stc.getShop_id()) {
+          if (item.getNumber() <= stc.getNumber()) {
+            tmp = stc.getNumber() - item.getNumber();
+            item.setNumber(tmp);
+            stmapper.updateById(item);
+            flag = 1;
+          } else {
+            flag = 2;
+          }
+          break;
+        } else {
+          flag = 3;
+        }
+      }
+      if (flag == 1) {
+        print = "出荷完了しました";
+      } else if (flag == 2) {
+        print = "エラー 在庫数より出荷数の方が多いです";
 
-    } else if (flag == 3) {
-      print = "エラー 商品が存在しません";
+      } else if (flag == 3) {
+        print = "エラー 商品が存在しません";
+      }
+
+      Date date = new Date(); // 今日の日付
+      SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+      String strDate = dateFormat.format(date);
+
+      Log log = new Log();
+      log.setDate(strDate);
+      log.setUser_id(id);
+      log.setItem_id(item_id);
+      log.setSend_shop_id(user.getShop_id());
+      log.setRecv_shop_id(recv_shop_id);
+      log.setNumber(number);
+      log.setMsg(msg);
+      lMapper.insertLog(log);
+    } else {
+      print = "店舗が存在しません";
     }
+
     model.addAttribute("result", print);
     ArrayList<Zaiko> zaikolist = zmapper.selectById(user.getShop_id());
     model.addAttribute("zaikolist", zaikolist);
     ArrayList<Shop> shops = shmapper.selectAllShop();
     model.addAttribute("shops", shops);
-    Date date = new Date(); // 今日の日付
-    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-    String strDate = dateFormat.format(date);
-    Log log = new Log();
-    log.setDate(strDate);
-    log.setUser_id(id);
-    log.setItem_id(item_id);
-    log.setSend_shop_id(user.getShop_id());
-    log.setRecv_shop_id(recv_shop_id);
-    log.setNumber(number);
-    log.setMsg(msg);
-    lMapper.insertLog(log);
     return "syukka.html";
   }
 
