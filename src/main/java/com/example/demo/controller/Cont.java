@@ -115,14 +115,28 @@ public class Cont {
     Stock item = new Stock();
     int id = Integer.parseInt(prin.getName());
     User user = uMapper.selectById(id);
-    item.setItem_id(item_id);
-    item.setShop_id(user.getShop_id());
-    item.setNumber(number);
-
-    nSchedule.addItems(item);
-    model.addAttribute("itemlist", nSchedule);
-    ArrayList<Item> items = imapper.selectAllItems();
+    int flag = 0;
+    ArrayList<Item> itemlist = imapper.selectAllItems();
+    for (Item it : itemlist) {
+      if (item_id == it.getItem_id()) {
+        flag = 1;
+        break;
+      }
+    }
+    if (flag == 1) {
+      item.setItem_id(item_id);
+      item.setShop_id(user.getShop_id());
+      item.setNumber(number);
+      nSchedule.addItems(item);
+    } else {
+      String print = "エラー 商品が存在しません";
+      model.addAttribute("result", print);
+    }
+    if (!nSchedule.emptyItems()) {
+      model.addAttribute("itemlist", nSchedule);
+    }
     // ArrayList<Shop> shops = shmapper.selectAllShop();
+    ArrayList<Item> items = imapper.selectAllItems();
     model.addAttribute("items", items);
     // model.addAttribute("shops", shops);
 

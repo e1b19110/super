@@ -24,5 +24,11 @@ public class nSchedule {
     this.items = items;
   }
 
-  
+  public boolean emptyItems() {
+    if (items.size() == 0) {
+      return true;
+    }
+    return false;
+  }
+
 }
