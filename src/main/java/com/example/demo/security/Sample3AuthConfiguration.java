@@ -17,7 +17,6 @@ public class Sample3AuthConfiguration extends WebSecurityConfigurerAdapter {
   protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
     // sshrun htpasswd -nbBC 10 user1 p@ss
-    // sshrun htpasswd -nbBC 10 user2 pass
     auth.inMemoryAuthentication().withUser("1")
         .password("$2y$10$vz5WWjPAEOULDnM8Av/gvO25SEXEzbjddm1AZYTl/abJ8GKSdjQOC").roles("USER");
     auth.inMemoryAuthentication().withUser("2")
