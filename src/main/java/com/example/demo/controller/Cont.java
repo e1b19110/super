@@ -79,7 +79,7 @@ public class Cont {
   }
 
   @PostMapping("zaiko1")
-  public String zaiko1(ModelMap model, Principal prin, @RequestParam Integer shop_id){
+  public String zaiko1(ModelMap model, Principal prin, @RequestParam Integer shop_id) {
     int id = Integer.parseInt(prin.getName());
     User user = userMapper.selectById(id);
     ArrayList<Zaiko> zaikoList = zaikoMapper.selectById(user.getShop_id());
@@ -88,13 +88,13 @@ public class Cont {
 
     boolean flag = false;
     ArrayList<Shop> shopList = shopMapper.selectAllShop();
-    for (Shop shop : shopList){
-      if(shop.getShop_id() == shop_id){
+    for (Shop shop : shopList) {
+      if (shop.getShop_id() == shop_id) {
         flag = true;
         break;
       }
     }
-    if(!flag){
+    if (!flag) {
       model.addAttribute("message", "エラー 店舗が存在しません");
       return "zaiko.html";
     }
@@ -231,7 +231,7 @@ public class Cont {
 
     String message = "結果なし";
 
-    //出荷先店舗が存在するか確認
+    // 出荷先店舗が存在するか確認
     ArrayList<Shop> shoplist = shopMapper.selectAllShop();
     boolean flag = false;
     for (Shop shop : shoplist) {
@@ -240,45 +240,49 @@ public class Cont {
         break;
       }
     }
-    if(!flag){
+    if (!flag) {
       message = "エラー:店舗が存在しません";
-    }
+    } else {
+      Stock item = new Stock();
+      item.setItem_id(item_id);
+      item.setShop_id(user.getShop_id());
+      item.setNumber(number);
 
-    Stock item = new Stock();
-    item.setItem_id(item_id);
-    item.setShop_id(user.getShop_id());
-    item.setNumber(number);
-    
-    ArrayList<Stock> stockList = stockMapper.selectAllStock();
-    for (Stock stock : stockList) {
-      if (item.getItem_id() == stock.getItem_id() && item.getShop_id() == stock.getShop_id()) {
-        if (item.getNumber() <= stock.getNumber()) {
-          int tmp = stock.getNumber() - item.getNumber();
-          item.setNumber(tmp);
-          stockMapper.updateById(item);
-          message = "出荷完了しました";
+      boolean syukkaFlag = false;
+      ArrayList<Stock> stockList = stockMapper.selectAllStock();
+      for (Stock stock : stockList) {
+        if (item.getItem_id() == stock.getItem_id() && item.getShop_id() == stock.getShop_id()) {
+          if (item.getNumber() <= stock.getNumber()) {
+            int tmp = stock.getNumber() - item.getNumber();
+            item.setNumber(tmp);
+            stockMapper.updateById(item);
+            message = "出荷完了しました";
+            syukkaFlag = true;
+          } else {
+            message = "エラー:在庫数より出荷数の方が多いです";
+          }
+          break;
         } else {
-          message = "エラー:在庫数より出荷数の方が多いです";
+          message = "エラー:商品が在庫に存在しません";
         }
-        break;
-      } else {
-        message = "エラー:商品が在庫に存在しません";
+      }
+
+      // ログ生成
+      if (syukkaFlag) {
+        Date date = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        String strDate = dateFormat.format(date);
+        Log log = new Log();
+        log.setDate(strDate);
+        log.setUser_id(id);
+        log.setItem_id(item_id);
+        log.setSend_shop_id(user.getShop_id());
+        log.setRecv_shop_id(recv_shop_id);
+        log.setNumber(number);
+        log.setMsg(msg);
+        logMapper.insertLog(log);
       }
     }
-
-    //ログ生成
-    Date date = new Date();
-    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-    String strDate = dateFormat.format(date);
-    Log log = new Log();
-    log.setDate(strDate);
-    log.setUser_id(id);
-    log.setItem_id(item_id);
-    log.setSend_shop_id(user.getShop_id());
-    log.setRecv_shop_id(recv_shop_id);
-    log.setNumber(number);
-    log.setMsg(msg);
-    logMapper.insertLog(log);
 
     ArrayList<Zaiko> zaikolist = zaikoMapper.selectById(user.getShop_id());
     model.addAttribute("zaikolist", zaikolist);
