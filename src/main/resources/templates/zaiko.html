@@ -9,33 +9,69 @@
 </head>
 
 <body>
-  <div th:if="${zaiko}">
-    <a href="/himiko/home" class="back">
-      <button class="back-button">
-        もどる
-      </button>
-    </a>
-    <h2>[[${shop_name}]]</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>商品ID</th>
-          <th>商品名</th>
-          <th>在庫数</th>
-          <th>単価</th>
-        </tr>
-      </thead>
-      <tbody>
-        <div th:each="zaiko,stat:${zaiko}">
+  <div class="flex">
+    <div th:if="${zaiko}">
+      <a href="/himiko/home" class="back">
+        <button class="back-button">
+          もどる
+        </button>
+      </a>
+      <h2>[[${shop_name}]]</h2>
+      <table>
+        <thead>
           <tr>
-            <td>[[${zaiko.item_id}]]</td>
-            <td>[[${zaiko.item_name}]]</td>
-            <td>[[${zaiko.number}]]</td>
-            <td>[[${zaiko.price}]]</td>
+            <th>商品ID</th>
+            <th>商品名</th>
+            <th>在庫数</th>
+            <th>単価</th>
           </tr>
-        </div>
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          <div th:each="zaiko,stat:${zaiko}">
+            <tr>
+              <td>[[${zaiko.item_id}]]</td>
+              <td>[[${zaiko.item_name}]]</td>
+              <td>[[${zaiko.number}]]</td>
+              <td>[[${zaiko.price}]]</td>
+            </tr>
+          </div>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <h2>他店舗在庫</h2>
+      <form action="/himiko/zaiko1" method="post">
+        <p>店舗ID<input type="number" name="shop_id" min="1" required /></p>
+        <input type="submit" value="セット">
+        <input type="reset" value="リセット">
+      </form>
+      <div th:if="${anotherZaiko}">
+        <h2>[[${anotherShop_name}]]</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>商品ID</th>
+              <th>商品名</th>
+              <th>在庫数</th>
+              <th>単価</th>
+            </tr>
+          </thead>
+          <tbody>
+            <div th:each="zaiko,stat:${anotherZaiko}">
+              <tr>
+                <td>[[${zaiko.item_id}]]</td>
+                <td>[[${zaiko.item_name}]]</td>
+                <td>[[${zaiko.number}]]</td>
+                <td>[[${zaiko.price}]]</td>
+              </tr>
+            </div>
+          </tbody>
+        </table>
+      </div>
+      <div th:if="${message}">
+        <p>[[${message}]]</p>
+      </div>
+    </div>
   </div>
 </body>
 
