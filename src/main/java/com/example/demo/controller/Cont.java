@@ -78,6 +78,33 @@ public class Cont {
     return "zaiko.html";
   }
 
+  @PostMapping("zaiko1")
+  public String zaiko1(ModelMap model, Principal prin, @RequestParam Integer shop_id){
+    int id = Integer.parseInt(prin.getName());
+    User user = userMapper.selectById(id);
+    ArrayList<Zaiko> zaikoList = zaikoMapper.selectById(user.getShop_id());
+    model.addAttribute("zaiko", zaikoList);
+    model.addAttribute("shop_name", zaikoList.get(0).getShop_name());
+
+    boolean flag = false;
+    ArrayList<Shop> shopList = shopMapper.selectAllShop();
+    for (Shop shop : shopList){
+      if(shop.getShop_id() == shop_id){
+        flag = true;
+        break;
+      }
+    }
+    if(!flag){
+      model.addAttribute("message", "エラー 店舗が存在しません");
+      return "zaiko.html";
+    }
+
+    ArrayList<Zaiko> anotherZaiko = zaikoMapper.selectById(shop_id);
+    model.addAttribute("anotherZaiko", anotherZaiko);
+    model.addAttribute("anotherShop_name", shopMapper.selectById(shop_id).getShop_name());
+    return "zaiko.html";
+  }
+
   @GetMapping("nyuka")
   public String nyuka() {
     return "nyuka.html";
