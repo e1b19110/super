@@ -1,7 +1,5 @@
 package com.example.demo.model;
 
-import java.util.Date;
-
 public class Log {
   int log_id;
   String date;
