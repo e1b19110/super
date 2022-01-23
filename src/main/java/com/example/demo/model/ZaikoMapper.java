@@ -12,7 +12,7 @@ import org.apache.ibatis.annotations.Select;
 @Mapper
 public interface ZaikoMapper {
 
-  @Select("select * from stock join items using (item_id) join shop using (shop_id) where shop.shop_id=#{shop_id}")
+  @Select("select * from stock join items using (item_id) join shop using (shop_id) where shop.shop_id=#{shop_id} order by item_id")
   ArrayList<Zaiko> selectById(int shop_id);
 
   @Select("select * from stock join items using (item_id) join shop using (shop_id) where not (shop.shop_id=#{shop_id})")
