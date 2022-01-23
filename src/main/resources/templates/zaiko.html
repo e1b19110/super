@@ -41,9 +41,7 @@
     <div>
       <h2>他店舗在庫</h2>
       <form action="/himiko/zaiko1" method="post">
-        <p>店舗ID<input type="number" name="shop_id" min="1" required /></p>
-        <input type="submit" value="セット">
-        <input type="reset" value="リセット">
+        <p>店舗ID<input type="number" name="shop_id" min="1" required /> <input type="submit" value="検索"></p>
       </form>
       <div th:if="${anotherZaiko}">
         <h2>[[${anotherShop_name}]]</h2>
